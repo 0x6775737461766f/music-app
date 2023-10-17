@@ -2,7 +2,6 @@
   <ion-page>
     <ion-content :fullscreen="true" class="p-4 bg-gray-100">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-        <Player :song="selectedSong" v-if="selectedSong" @close="clearSelectedSong" />
         <div v-for="song in songs" :key="song.id" @click="selectSong(song)" class="bg-transparent p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1 flex items-center cursor-pointer">
           <img :src="getSongImageUrl(song)" alt="Capa do Som" class="w-16 h-16 object-cover mr-4" />
           <div>
@@ -12,6 +11,7 @@
           </div>
         </div>
       </div>
+    <Player :song="selectedSong" v-if="selectedSong" @close="clearSelectedSong" />
     </ion-content>
   </ion-page>
 </template>
