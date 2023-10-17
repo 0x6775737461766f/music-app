@@ -1,0 +1,8 @@
+{
+  "name": "music-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite",
+  "id": "f973a4ac"
+}
