@@ -3,10 +3,10 @@
     <ion-content :fullscreen="true" class="p-4 bg-gray-100">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
         <div v-for="song in songs" :key="song.id" @click="selectSong(song)" class="bg-transparent p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1 flex items-center cursor-pointer">
-        <img :src="getSongImageUrl(song)" alt="Capa do Som" class="w-16 h-16 object-cover mr-4" />
+        <img :src="getSongImageUrl(song)" alt="Song Cover" class="w-16 h-16 object-cover mr-4" />
         <div :class="{ 'text-purple-500': isSelectedSong(song) }">
           <h2 class="text-md font-semibold mb-1">{{ song.title }}</h2>
-          <p class="text-sm text-gray-600 mb-1">{{ song.artist }}</p>
+          <p class="text-sm text-gray-600 mb-1">{{ song.expand.artists.map(artist => artist.name).join(' | ') }}</p>
           <p class="text-sm text-gray-500">{{ formatDuration(song.duration) }}</p>
         </div>
       </div>
@@ -45,21 +45,6 @@ const clearSelectedSong = () => {
   selectedSong.value = null;
 };
 
-// onMounted(async () => {
-//   try {
-//     pb = new Pocketbase(url);
-//     const authData = await pb.admins.authWithPassword('gustavo.oliveira@exxess-markets.com', 'gpdo07062002');
-//     console.log(authData);
-//     const records: RecordModel[] = await pb.collection('songs').getFullList({
-//       sort: '-created',
-//     });
-//     songs.value = records;
-//     console.log(songs)
-//   } catch (e) {
-//     console.error(e);
-//   }
-// });
-
 const fetchSongs = async () => {
   try {
     if (!pb) {
@@ -69,6 +54,7 @@ const fetchSongs = async () => {
     console.log(authData);
     const records: RecordModel[] = await pb.collection('songs').getFullList({
       sort: '-created',
+      expand: "artists"
     });
     songs.value = records;
     console.log(songs)

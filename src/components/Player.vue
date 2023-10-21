@@ -1,13 +1,18 @@
 <template>
-  <div class="fixed bottom-0 left-0 w-full bg-black bg-opacity-50 p-1">
+  <div class="fixed bottom-0 left-0 w-full bg-black bg-opacity-70 backdrop-blur-sm p-1">
     <div class="flex items-center justify-between text-white mb-2">
-      <div>
-        <p class="text-sm">{{ props.song.title }}</p>
-        <p class="text-xs text-gray-500">{{ formatDuration(props.song.duration) }}</p>
+      <div class="flex items-center space-x-2">
+        <img :src="getSongImageUrl(props.song)" alt="Capa da Música" class="w-12 h-12 object-cover">
+
+        <div class="flex flex-col">
+          <p class="text-sm">{{ props.song.title }}</p>
+          <p class="text-xs text-gray-500">{{ props.song.expand.artists.map(artist => artist.name).join(' | ') }}</p>
+        </div>
       </div>
+
       <div class="flex items-center space-x-4">
         <ion-icon @click="toggleAudio" :icon="isPlaying ? pause : play" class="text-3xl"></ion-icon>
-        <ion-icon @click="closePlayerHandler" :icon="closeOutline" class="text-4xl text-red-500"></ion-icon>
+        <ion-icon @click="closePlayerHandler" :icon="closeOutline" class="text-4xl text-red-500 text-opacity-70"></ion-icon>
       </div>
     </div>
     <div class="h-1 bg-gray-400">
@@ -41,10 +46,6 @@ const formatDuration = (durationInSeconds: number) => {
   const minutes = Math.floor(durationInSeconds / 60);
   const seconds = durationInSeconds % 60;
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-};
-
-const closePlayer = () => {
-  ctx?.emit('close');
 };
 
 const emits = defineEmits();
@@ -93,6 +94,14 @@ const getAudioUrl = async (song: RecordModel) => {
   const collectionId = song.collectionId;
   const recordId = song.id;
   const filename = song.song;
+  return `${baseUrl}${collectionId}/${recordId}/${filename}`;
+};
+
+const getSongImageUrl = (song: RecordModel) => {
+  const baseUrl = `${url}/api/files/`;
+  const collectionId = song.collectionId;
+  const recordId = song.id;
+  const filename = song.cover;
   return `${baseUrl}${collectionId}/${recordId}/${filename}`;
 };
 

@@ -93,7 +93,7 @@ const handleSearchInput = async (event: CustomEvent) => {
 };
 
 const getSongImageUrl = (song: SearchResult) => {
-  const baseUrl = `${url}/api/files/`;
+  const baseUrl = `${url}/api/files/`; 
   const collectionId = song.collectionId;
   const recordId = song.id;
   const filename = song.cover;

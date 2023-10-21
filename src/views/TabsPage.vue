@@ -21,7 +21,7 @@
 
 <style scoped>
 .custom-tab-bar {
-  background-color: rgba(51, 51, 51, 0.8); /* Cor de fundo com opacidade */
+  background-color: rgba(0, 0, 0, 0.8); /* Cor de fundo com opacidade */
   backdrop-filter: blur(5px); /* Adicionando um leve desfoque */
 }
 
