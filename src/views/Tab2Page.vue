@@ -18,7 +18,7 @@
         <h2 class="text-white mb-4">Search results:</h2>
         <ul>
           <li v-for="result in searchResults" :key="result.id" class="mb-4 flex items-center">
-            <img :src="getSongImageUrl(result)" alt="Cover Image" class="w-16 h-16 object-cover rounded-full mr-4" />
+            <img v-if="result.cover" :src="getSongImageUrl(result)" alt="Cover Image" class="w-16 h-16 object-cover rounded-full mr-4" />
             <div>
               <h3 class="text-lg font-semibold">{{ result.name }}</h3>
             </div>
@@ -78,7 +78,6 @@ const handleSearchInput = async (event: CustomEvent) => {
       }));
       searchResults.value = formattedResults;
       if (formattedResults.length === 0) {
-        // Atualiza searchResults com a mensagem de sem resultados
         searchResults.value = [{
           id: 0,
           name: `No search results for: "${searchTerm}"`,
@@ -89,7 +88,7 @@ const handleSearchInput = async (event: CustomEvent) => {
     } catch (error) {
       console.error(error);
     }
-  }, 300);
+  }, 200);
 };
 
 const getSongImageUrl = (song: SearchResult) => {
